@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General */
+body {
+  @apply bg-gradient-to-br from-gray-200 to-gray-300 min-h-screen text-gray-800 transition-all duration-500;
+}
+body.dark {
+  @apply bg-gradient-to-br from-gray-900 to-gray-700 text-gray-300;
+}
+
+/* Títulos */
+.title {
+  @apply text-4xl font-extrabold text-purple-500 dark:text-purple-300 mb-4 text-center;
+}
+.subtitle {
+  @apply text-2xl font-bold mb-2 text-center text-purple-500 dark:text-purple-200;
+}
+.contador {
+  @apply text-center text-base font-semibold mb-6 text-purple-400 dark:text-purple-500;
+}
+
+/* Buscador */
+.search-container {
+  @apply flex flex-col sm:flex-row items-center gap-4 mb-6 w-full justify-center;
+}
+input[type="text"] {
+  @apply border border-gray-300 p-3 rounded-full max-w-full text-gray-800 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 text-center dark:border-gray-600;
+  width: 22rem;
+}
+button {
+  @apply bg-purple-600 text-white px-6 py-3 rounded-full font-bold hover:bg-purple-700 transition-all duration-300;
+}
+
+/* Selector de vista */
+.view-selector {
+  @apply flex justify-center gap-4 mb-8;
+}
+.view-selector button {
+  @apply bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 font-bold transition-all duration-300;
+}
+.view-selector .active-view {
+  @apply bg-purple-800;
+}
+
+/* Barra alfabética */
+.alphabet-bar {
+  @apply flex flex-wrap justify-center gap-2 mb-6;
+}
+.alphabet-btn {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold px-3 py-1 rounded transition-all duration-200;
+}
+.alphabet-btn:hover {
+  @apply bg-purple-300 dark:bg-purple-600;
+}
+.alphabet-btn.active {
+  @apply bg-purple-600 text-white;
+}
+
+/* Grid */
+.grid-autofit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* Tarjetas */
+.user-card {
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-md transition-all duration-300 p-4 flex flex-col items-center text-gray-800 dark:text-gray-100;
+}
+.user-card:hover {
+  @apply shadow-xl dark:shadow-lg scale-105;
+}
+.user-id {
+  @apply text-xs text-gray-500;
+}
+.user-name {
+  @apply text-base font-bold;
+}
+.avatar {
+  @apply w-16 h-16 rounded-full object-cover border-4 border-purple-400 dark:border-purple-300 shadow mb-3;
+}
+
+/* Paginación */
+.pagination {
+  @apply flex flex-wrap items-center justify-center gap-2;
+}
+.pagination button {
+  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow hover:shadow-lg transition-all duration-300 font-semibold;
+}
+.pagination .active-page {
+  @apply bg-purple-600 text-white;
+}
+
+/* Footer */
+.footer {
+  @apply w-full text-center text-sm text-purple-500 dark:text-purple-300 py-6;
+}
+.footer-link {
+  @apply font-semibold hover:underline;
+}
+
+/* Modal */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50;
+}
+.modal {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 rounded-xl max-w-3xl w-full shadow-xl overflow-y-auto max-h-[80vh];
+}
+.modal-title {
+  @apply text-xl font-bold mb-4 text-center;
+}
+.modal-steps {
+  @apply list-decimal pl-6 mb-4 text-sm;
+}
+.code-block {
+  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-auto text-sm text-left max-h-60 mb-4;
+}
+.btn-copy {
+  @apply bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition mb-4;
+}
