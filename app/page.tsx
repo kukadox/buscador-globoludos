@@ -9,7 +9,7 @@ export default function Home() {
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [top200, setTop200] = useState<any[]>([]);
-  const [view, setView] = useState<'top' | 'az'>('top'); // ✅ VISTA PREDETERMINADA: TOP
+  const [view, setView] = useState<'top' | 'az'>('top');
   const [darkMode, setDarkMode] = useState(true);
   const [currentLetter, setCurrentLetter] = useState('#');
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ export default function Home() {
         setUsers(sortedAZ);
         const sortedTop = [...data].sort((a, b) => b.followers_count - a.followers_count).slice(0, 200);
         setTop200(sortedTop);
-        setFilteredUsers(sortedTop); // ✅ Carga inicial = Top 200
+        setFilteredUsers(sortedTop);
       });
   }, []);
 
@@ -63,9 +63,7 @@ export default function Home() {
     setCurrentPage(1);
     const result = baseUsers.filter((user) => {
       const first = user.name?.[0]?.toUpperCase() || '';
-      return letter === '#'
-        ? isSymbol(first)
-        : first === letter;
+      return letter === '#' ? isSymbol(first) : first === letter;
     });
     setFilteredUsers(result);
   };
@@ -112,9 +110,12 @@ export default function Home() {
     saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Listado_Mandriles.xlsx');
   };
 
-  const generarScript = () => {
-    const ids = [...new Set(filteredUsers.map((u) => `"${u.user_id}"`))];
-    const script = `(async () => {
+  const generarScript = async () => {
+    try {
+      const res = await fetch('/api/buscar');
+      const allUsers = await res.json();
+      const ids = [...new Set(allUsers.map((u: any) => `"${u.user_id}"`))];
+      const script = `(async () => {
   const ids = [${ids.join(',')}];
   const logBox = (() => {
     let el = document.getElementById("visual-log");
@@ -162,8 +163,12 @@ export default function Home() {
   }
   log("🚀 Proceso completo.");
 })();`;
-    setScriptCode(script);
-    setScriptVisible(true);
+      setScriptCode(script);
+      setScriptVisible(true);
+    } catch (error) {
+      alert('Error al generar el script');
+      console.error(error);
+    }
   };
 
   const copiarScript = async () => {
