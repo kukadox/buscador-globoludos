@@ -115,8 +115,10 @@ export default function Home() {
       const res = await fetch('/api/buscar');
       const allUsers = await res.json();
       const ids = [...new Set(allUsers.map((u: any) => `"${u.user_id}"`))];
+
       const script = `(async () => {
   const ids = [${ids.join(',')}];
+  const done = JSON.parse(localStorage.getItem('blockedIds') || '[]');
   const logBox = (() => {
     let el = document.getElementById("visual-log");
     if (!el) {
@@ -135,10 +137,14 @@ export default function Home() {
     const div = document.createElement("div");
     div.innerText = msg;
     logBox.appendChild(div);
-    setTimeout(() => { div.remove(); }, 10000);
+    setTimeout(() => { div.remove(); }, 8000);
   };
   const getCSRF = () => document.cookie.split("; ").find(x => x.startsWith("ct0="))?.split("=")[1];
   const blockUser = async (userId) => {
+    if (done.includes(userId)) {
+      log("⛔ Ya estaba bloqueado: " + userId);
+      return false;
+    }
     const headers = {
       "Content-Type": "application/x-www-form-urlencoded",
       "x-csrf-token": getCSRF(),
@@ -150,19 +156,28 @@ export default function Home() {
         method: "POST", headers, body: "user_id=" + userId, credentials: "include"
       });
       const data = await res.json();
-      if (data.errors?.[0]?.code === 162) return log("Ya bloqueado: " + userId);
-      if (!res.ok) throw new Error(\`HTTP \${res.status}: \${data?.errors?.[0]?.message || "Error"}\`);
-      log("✅ Bloqueado: " + userId);
+      if (data.errors?.[0]?.code === 162) {
+        log("⛔ Ya estaba bloqueado: " + userId);
+      } else if (res.ok) {
+        log("✅ Bloqueado: " + userId);
+      } else {
+        log("❌ Error: " + userId + " - " + data?.errors?.[0]?.message || res.status);
+      }
+      done.push(userId);
+      localStorage.setItem('blockedIds', JSON.stringify(done));
+      return true;
     } catch (e) {
-      log("⚠️ Error con " + userId + " - " + e.message);
+      log("❌ Error con " + userId + " - " + e.message);
+      return false;
     }
   };
   for (const id of ids) {
-    await blockUser(id);
-    await new Promise(r => setTimeout(r, 5000));
+    const shouldDelay = await blockUser(id);
+    if (shouldDelay) await new Promise(r => setTimeout(r, 5000));
   }
-  log("🚀 Proceso completo.");
+  log("🚀 Proceso terminado.");
 })();`;
+
       setScriptCode(script);
       setScriptVisible(true);
     } catch (error) {
