@@ -2,23 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-/* General */
 body {
   @apply bg-gradient-to-br from-gray-200 to-gray-300 min-h-screen text-gray-800 transition-all duration-500;
 }
 body.dark {
-  @apply bg-gradient-to-br from-gray-900 to-gray-700 text-gray-300;
+  @apply bg-gradient-to-br from-gray-900 to-gray-700 text-gray-100;
 }
 
 /* Títulos */
 .title {
-  @apply text-4xl font-extrabold text-purple-500 dark:text-purple-300 mb-4 text-center;
+  @apply text-4xl font-extrabold text-purple-700 dark:text-purple-300 mb-4 text-center;
 }
 .subtitle {
-  @apply text-2xl font-bold mb-2 text-center text-purple-500 dark:text-purple-200;
+  @apply text-2xl font-bold mb-2 text-center text-purple-800 dark:text-purple-200;
 }
 .contador {
-  @apply text-center text-base font-semibold mb-6 text-purple-400 dark:text-purple-500;
+  @apply text-center text-base font-semibold mb-6 text-purple-600 dark:text-purple-300;
 }
 
 /* Buscador */
@@ -96,7 +95,7 @@ button {
 
 /* Footer */
 .footer {
-  @apply w-full text-center text-sm text-purple-500 dark:text-purple-300 py-6;
+  @apply w-full text-center text-sm text-purple-700 dark:text-purple-300 py-6;
 }
 .footer-link {
   @apply font-semibold hover:underline;

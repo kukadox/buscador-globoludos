@@ -9,7 +9,7 @@ export default function Home() {
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [top200, setTop200] = useState<any[]>([]);
-  const [view, setView] = useState<'top' | 'az'>('top');
+  const [view, setView] = useState<'top' | 'az'>('top'); // ✅ VISTA PREDETERMINADA: TOP
   const [darkMode, setDarkMode] = useState(true);
   const [currentLetter, setCurrentLetter] = useState('#');
   const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ export default function Home() {
         setUsers(sortedAZ);
         const sortedTop = [...data].sort((a, b) => b.followers_count - a.followers_count).slice(0, 200);
         setTop200(sortedTop);
-        filterAZ(currentLetter, sortedAZ);
+        setFilteredUsers(sortedTop); // ✅ Carga inicial = Top 200
       });
   }, []);
 
@@ -219,9 +219,7 @@ export default function Home() {
       <h2 className="subtitle text-center mb-1">
         {view === 'top' ? 'Top 200 Mandriles por Seguidores' : 'Todos los Mandriles A-Z'}
       </h2>
-      <p className="contador">
-        Mandriles en el Sistema: {counter}
-      </p>
+      <p className="contador">Mandriles en el Sistema: {counter}</p>
 
       <div className="grid-autofit w-full max-w-7xl mb-10">
         {paginatedUsers.map((user) => (
