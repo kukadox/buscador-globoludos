@@ -258,9 +258,9 @@ export default function Home() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2 className="modal-title">Instrucciones para bloquear</h2>
             <ol className="modal-steps">
-              <li>1. Abre <code>https://x.com/settings/blocked/all</code>.</li>
-              <li>2. Presiona <b>F12</b> y abre la consola.</li>
-              <li>3. Copia y pega este script:</li>
+              <li>Abre <code>https://x.com/settings/blocked/all</code>.</li>
+              <li>Presiona <b>F12</b> y abre la consola.</li>
+              <li>Copia y pega este script:</li>
             </ol>
             <pre className="code-block"><code>{scriptCode}</code></pre>
             <button className="btn-copy" onClick={copiarScript}>Copiar Script</button>
