@@ -2,62 +2,61 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
 body {
-  @apply bg-gradient-to-br from-gray-200 to-gray-300 min-h-screen text-gray-800 transition-all duration-500;
-}
-body.dark {
-  @apply bg-gradient-to-br from-gray-900 to-gray-700 text-gray-100;
+  @apply bg-gradient-to-br from-yellow-100 to-yellow-200 min-h-screen text-yellow-900 transition-all duration-500;
+  font-family: 'Rubik', sans-serif;
 }
 
-/* Títulos */
+body.dark {
+  @apply bg-gradient-to-br from-gray-900 to-gray-700 text-yellow-300;
+}
+
 .title {
-  @apply text-4xl font-extrabold text-purple-700 dark:text-purple-300 mb-4 text-center;
+  @apply text-4xl font-extrabold text-yellow-500 dark:text-yellow-300 mb-4 text-center;
 }
 .subtitle {
-  @apply text-2xl font-bold mb-2 text-center text-purple-800 dark:text-purple-200;
+  @apply text-2xl font-bold mb-2 text-center text-yellow-600 dark:text-yellow-200;
 }
 .contador {
-  @apply text-center text-base font-semibold mb-6 text-purple-600 dark:text-purple-300;
+  @apply text-center text-base font-semibold mb-6 text-yellow-700 dark:text-yellow-400;
 }
 
-/* Buscador */
 .search-container {
   @apply flex flex-col sm:flex-row items-center gap-4 mb-6 w-full justify-center;
 }
 input[type="text"] {
-  @apply border border-gray-300 p-3 rounded-full max-w-full text-gray-800 dark:text-white bg-white dark:bg-gray-800 placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-400 text-center dark:border-gray-600;
+  @apply border border-yellow-400 p-3 rounded-full max-w-full text-yellow-900 dark:text-yellow-100 bg-white dark:bg-gray-800 placeholder-yellow-500 dark:placeholder-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 text-center;
   width: 22rem;
 }
 button {
-  @apply bg-purple-600 text-white px-6 py-3 rounded-full font-bold hover:bg-purple-700 transition-all duration-300;
+  @apply bg-yellow-400 text-black px-6 py-3 rounded-full font-bold hover:bg-yellow-500 transition-all duration-300;
 }
 
-/* Selector de vista */
 .view-selector {
   @apply flex justify-center gap-4 mb-8;
 }
 .view-selector button {
-  @apply bg-purple-600 text-white px-4 py-2 rounded-full hover:bg-purple-700 font-bold transition-all duration-300;
+  @apply bg-yellow-400 text-black px-4 py-2 rounded-full hover:bg-yellow-500 font-bold transition-all duration-300;
 }
 .view-selector .active-view {
-  @apply bg-purple-800;
+  @apply bg-yellow-600 text-white;
 }
 
-/* Barra alfabética */
 .alphabet-bar {
   @apply flex flex-wrap justify-center gap-2 mb-6;
 }
 .alphabet-btn {
-  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold px-3 py-1 rounded transition-all duration-200;
+  @apply bg-yellow-200 dark:bg-gray-700 text-yellow-900 dark:text-yellow-200 font-bold px-3 py-1 rounded transition-all duration-200;
 }
 .alphabet-btn:hover {
-  @apply bg-purple-300 dark:bg-purple-600;
+  @apply bg-yellow-400 dark:bg-yellow-600;
 }
 .alphabet-btn.active {
-  @apply bg-purple-600 text-white;
+  @apply bg-yellow-500 text-black;
 }
 
-/* Grid */
 .grid-autofit {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -65,48 +64,44 @@ button {
   padding: 2rem;
 }
 
-/* Tarjetas */
 .user-card {
-  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-md transition-all duration-300 p-4 flex flex-col items-center text-gray-800 dark:text-gray-100;
+  @apply bg-white dark:bg-gray-800 rounded-2xl shadow-md transition-all duration-300 p-4 flex flex-col items-center text-yellow-900 dark:text-yellow-100;
 }
 .user-card:hover {
   @apply shadow-xl dark:shadow-lg scale-105;
 }
 .user-id {
-  @apply text-xs text-gray-500;
+  @apply text-xs text-yellow-500;
 }
 .user-name {
-  @apply text-base font-bold;
+  @apply text-base font-bold text-yellow-700;
 }
 .avatar {
-  @apply w-16 h-16 rounded-full object-cover border-4 border-purple-400 dark:border-purple-300 shadow mb-3;
+  @apply w-16 h-16 rounded-full object-cover border-4 border-yellow-400 dark:border-yellow-300 shadow mb-3;
 }
 
-/* Paginación */
 .pagination {
   @apply flex flex-wrap items-center justify-center gap-2;
 }
 .pagination button {
-  @apply bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-full shadow hover:shadow-lg transition-all duration-300 font-semibold;
+  @apply bg-yellow-200 dark:bg-gray-700 text-yellow-800 dark:text-yellow-200 px-4 py-2 rounded-full shadow hover:shadow-lg transition-all duration-300 font-semibold;
 }
 .pagination .active-page {
-  @apply bg-purple-600 text-white;
+  @apply bg-yellow-500 text-black;
 }
 
-/* Footer */
 .footer {
-  @apply w-full text-center text-sm text-purple-700 dark:text-purple-300 py-6;
+  @apply w-full text-center text-sm text-yellow-600 dark:text-yellow-300 py-6;
 }
 .footer-link {
   @apply font-semibold hover:underline;
 }
 
-/* Modal */
 .modal-overlay {
   @apply fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50;
 }
 .modal {
-  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-6 rounded-xl max-w-3xl w-full shadow-xl overflow-y-auto max-h-[80vh];
+  @apply bg-white dark:bg-gray-900 text-yellow-900 dark:text-yellow-100 p-6 rounded-xl max-w-3xl w-full shadow-xl overflow-y-auto max-h-[80vh];
 }
 .modal-title {
   @apply text-xl font-bold mb-4 text-center;
@@ -115,8 +110,38 @@ button {
   @apply list-decimal pl-6 mb-4 text-sm;
 }
 .code-block {
-  @apply bg-gray-100 dark:bg-gray-800 p-4 rounded-lg overflow-auto text-sm text-left max-h-60 mb-4;
+  @apply bg-yellow-100 dark:bg-gray-800 p-4 rounded-lg overflow-auto text-sm text-left max-h-60 mb-4;
 }
 .btn-copy {
-  @apply bg-blue-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-blue-700 transition mb-4;
+  @apply text-black bg-yellow-400 hover:bg-yellow-500 px-4 py-2 rounded-lg font-bold transition text-sm sm:text-base text-center;
+}
+
+.uniform-btn {
+  @apply w-52 h-12 inline-flex items-center justify-center;
+}
+
+.btn-blue {
+  @apply bg-yellow-400 hover:bg-yellow-500 text-black;
+}
+.btn-red {
+  @apply bg-red-600 hover:bg-red-700;
+}
+.btn-green {
+  @apply bg-green-600 hover:bg-green-700;
+}
+
+.access-wrapper {
+  @apply flex items-center justify-center min-h-screen bg-gradient-to-br from-yellow-100 to-yellow-300 dark:from-gray-900 dark:to-gray-700 transition-all duration-500;
+}
+.access-box {
+  @apply bg-white dark:bg-gray-800 p-10 rounded-2xl shadow-2xl w-full max-w-md text-center;
+}
+.access-title {
+  @apply text-3xl font-extrabold text-yellow-600 dark:text-yellow-300 mb-6;
+}
+.access-input {
+  @apply w-full px-4 py-3 mb-4 rounded-full border border-yellow-400 dark:border-yellow-600 text-black bg-white dark:bg-gray-100 placeholder-yellow-500 focus:outline-none focus:ring-2 focus:ring-yellow-500;
+}
+.access-button {
+  @apply w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-3 rounded-full transition duration-300;
 }

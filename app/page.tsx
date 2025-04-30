@@ -4,8 +4,13 @@ import { useEffect, useState, useMemo } from 'react';
 import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import './header.css';
+import './globals.css';
 
 export default function Home() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [passwordInput, setPasswordInput] = useState('');
+  const PASSWORD = 'u/886I[dG#07';
+
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
   const [top200, setTop200] = useState<any[]>([]);
@@ -71,16 +76,16 @@ export default function Home() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     const lower = query.toLowerCase();
-    if (view === 'top') {
-      const result = top200.filter((u) =>
-        [u.name, u.username, u.user_id.toString()].some((x) => x.toLowerCase().includes(lower))
-      );
-      setFilteredUsers(result);
-    } else {
-      const result = users.filter((u) =>
-        [u.name, u.username, u.user_id.toString()].some((x) => x.toLowerCase().includes(lower))
-      );
+    const source = view === 'top' ? top200 : users;
+    const result = source.filter((u) =>
+      [u.name, u.username, u.user_id.toString()].some((x) =>
+        x.toLowerCase().includes(lower)
+      )
+    );
+    if (view === 'az') {
       filterAZ(currentLetter, result);
+    } else {
+      setFilteredUsers(result);
     }
   };
 
@@ -96,18 +101,26 @@ export default function Home() {
   }, [filteredUsers, view]);
 
   const exportToExcel = () => {
-    const data = filteredUsers.map((u) => ({
+    const uniqueUsersMap = new Map();
+    users.forEach((u) => {
+      if (!uniqueUsersMap.has(u.user_id)) {
+        uniqueUsersMap.set(u.user_id, u);
+      }
+    });
+
+    const data = Array.from(uniqueUsersMap.values()).map((u) => ({
       Nombre: u.name,
       Username: u.username,
       ID: u.user_id,
       Seguidores: u.followers_count,
       Perfil: u.profile_url,
     }));
+
     const ws = XLSX.utils.json_to_sheet(data);
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Mandriles');
+    XLSX.utils.book_append_sheet(wb, ws, 'Globoludos');
     const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Listado_Mandriles.xlsx');
+    saveAs(new Blob([excelBuffer], { type: 'application/octet-stream' }), 'Listado_Globoludos.xlsx');
   };
 
   const generarScript = async () => {
@@ -191,6 +204,35 @@ export default function Home() {
     alert('Script copiado al portapapeles');
   };
 
+  if (!authenticated) {
+    return (
+      <main className="access-wrapper">
+        <div className="access-box">
+          <h1 className="access-title">🔒 Acceso restringido</h1>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            className="access-input"
+            value={passwordInput}
+            onChange={(e) => setPasswordInput(e.target.value)}
+          />
+          <button
+            onClick={() => {
+              if (passwordInput === PASSWORD) {
+                setAuthenticated(true);
+              } else {
+                alert('Contraseña incorrecta');
+              }
+            }}
+            className="access-button"
+          >
+            Entrar
+          </button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="flex flex-col items-center pt-4 px-4">
       <header className="header">
@@ -205,7 +247,7 @@ export default function Home() {
         </div>
       </header>
 
-      <h1 className="title text-center mb-2">Buscador de Mandriles en Twitter 🐒</h1>
+      <h1 className="title text-center mb-2">Buscador de Globoludos 🎈</h1>
 
       <form onSubmit={handleSearch} className="search-container">
         <input
@@ -219,10 +261,10 @@ export default function Home() {
 
       <div className="view-selector">
         <button className={view === 'top' ? 'active-view' : ''} onClick={() => { setView('top'); setFilteredUsers(top200); setQuery(''); }}>
-          Top 200 Mandriles por Seguidores
+          Top 200 Globoludos por Seguidores
         </button>
         <button className={view === 'az' ? 'active-view' : ''} onClick={() => { setView('az'); filterAZ(currentLetter); setQuery(''); }}>
-          Todos los Mandriles A-Z
+          Todos los Globoludos A-Z
         </button>
       </div>
 
@@ -237,9 +279,9 @@ export default function Home() {
       )}
 
       <h2 className="subtitle text-center mb-1">
-        {view === 'top' ? 'Top 200 Mandriles por Seguidores' : 'Todos los Mandriles A-Z'}
+        {view === 'top' ? 'Top 200 Globoludos por Seguidores' : 'Todos los Globoludos A-Z'}
       </h2>
-      <p className="contador">Mandriles en el Sistema: {counter}</p>
+      <p className="contador">Contador de Globoludos en el sistema: {counter}</p>
 
       <div className="grid-autofit w-full max-w-7xl mb-10">
         {paginatedUsers.map((user) => (
@@ -278,12 +320,26 @@ export default function Home() {
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2 className="modal-title">Instrucciones para bloquear</h2>
             <ol className="modal-steps">
-              <li>Abre <code>https://x.com/settings/blocked/all</code>.</li>
+              <li>
+                Abre{' '}
+                <a
+                  href="https://x.com/settings/blocked/all"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 underline hover:text-blue-600"
+                >
+                  https://x.com/settings/blocked/all
+                </a>.
+              </li>
               <li>Presiona <b>F12</b> y abre la consola.</li>
               <li>Copia y pega este script:</li>
             </ol>
             <pre className="code-block"><code>{scriptCode}</code></pre>
-            <button className="btn-copy" onClick={copiarScript}>Copiar Script</button>
+            <div className="flex flex-row gap-4 justify-center items-center flex-wrap">
+              <button className="btn-copy btn-blue uniform-btn" onClick={copiarScript}>📋 Copiar Script</button>
+              <a href="https://www.youtube.com/watch?v=onytaNtcmT0" target="_blank" rel="noopener noreferrer" className="btn-copy btn-red uniform-btn">▶️ Ver Tutorial</a>
+              <a href="https://drive.google.com/file/d/1CFdqPRg_Jdax8Qb3C92SpWJS5SRxZuvi/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className="btn-copy btn-green uniform-btn">📄 Tutorial PDF</a>
+            </div>
           </div>
         </div>
       )}

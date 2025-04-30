@@ -34,8 +34,8 @@
 
 .btn-download,
 .btn-script {
-  background-color: #7c3aed;
-  color: white;
+  background-color: #facc15;
+  color: black;
   padding: 0.6rem 1.2rem;
   border-radius: 0.5rem;
   font-weight: 600;
@@ -46,5 +46,5 @@
 
 .btn-download:hover,
 .btn-script:hover {
-  background-color: #5b21b6;
+  background-color: #eab308;
 }
