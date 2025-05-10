@@ -9,7 +9,7 @@ import './globals.css';
 export default function Home() {
   const [authenticated, setAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
-  const PASSWORD = 'u/886I[dG#07';
+  const PASSWORD = '$gfwJ$Lo!E7kcRVTHfms4#';
 
   const [users, setUsers] = useState<any[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
